@@ -771,6 +771,10 @@ describe("ADR-0007: OpenCode config dir", { concurrency: CONC }, () => {
     mkdirSync(pkgDir, { recursive: true });
     writeFileSync(path.join(pkgDir, "server.mjs"), `
 import { createInterface } from "node:readline";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 const tools = ${JSON.stringify([...TOOL_ORDER])};
 createInterface({ input: process.stdin }).on("line", (l) => {
   const m = JSON.parse(l);
